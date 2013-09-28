@@ -41,6 +41,7 @@ class Projectile:
         self.dx = 0
         self.dy = 0
         self.impact = impact
+        self.screen = None
 
     def setTrajectory(self, px,py, mx, my):
         dx = px - mx
@@ -55,9 +56,13 @@ class Projectile:
         self.rect.centerx -= self.dx * dt
         self.rect.centery -= self.dy * dt
 
+    def setImage(self, screen):
+        self.screen = screen
+    def getImage(self):
+        return self.screen
+
     def getRect(self):
         return self.rect
-
     def getX(self):
         return self.rect.centerx
     def getY(self):

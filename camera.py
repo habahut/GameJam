@@ -22,7 +22,7 @@ class Camera:
         self.currentWeapon = currentWeapon
         self.goreObjects = []
 
-    def changeWeapon(self, cw):
+    def setCurrentWeapon(self, cw):
         self.currentWeapon = cw
 
     def registerGore(self, go):
@@ -92,7 +92,8 @@ class Camera:
                 continue
             relposx = objList[i].getX() - self.rect.left
             relposy = objList[i].getY() - self.rect.top
-            pygame.draw.circle(self.screen, (0,0,0), (int(relposx), int(relposy)), 5)
+            self.screen.blit(objList[i].getImage(),  (int(relposx), int(relposy)))
+            #pygame.draw.circle(self.screen, (0,0,0), (int(relposx), int(relposy)), 5)
 
         for i in reversed(toRemove):
             del objList[i]

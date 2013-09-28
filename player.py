@@ -46,7 +46,7 @@ class Player:
         self.dx += dirX
         self.dy += dirY
 
-    def setWeapon(self, Weapon):
+    def setWeapon(self, weapon):
         self.currentWeapon = weapon
 
     def shoot(self):
