@@ -2,21 +2,21 @@
 
 from pygame import Rect
 from math import sqrt
+from weapon import *
 
 class Player:
-    def __init__(self, x, y):
+    def __init__(self, x, y, weapon):
         self.dx = 0
         self.dy = 0
         self.lungetimer = 0
         self.lungedelay = 500
         self.myrect = Rect(x,y,32,32)
+        self.currentWeapon = weapon
     
     def update(self, dt):
-        #self.myrect.centerx += (self.dx * dt)
         self.myrect.centerx += (self.dx * dt)
         self.myrect.centery += (self.dy * dt)
-        self.lungetimer -= dt
-        
+        self.lungetimer -= dt        
         self.currentWeapon.update(dt)
 
         if self.lungetimer >= 400:
@@ -26,8 +26,8 @@ class Player:
             self.dy *= .6
             self.dx *= .6
         else:
-            self.dy *= .5
-            self.dx *= .5
+            self.dy = 0
+            self.dx = 0
 
     def lunge(self, mx, my):
         if self.lungetimer > 0:
@@ -46,11 +46,12 @@ class Player:
         self.dx += dirX
         self.dy += dirY
 
-    def getWeapon(self):
-        return 1
+    def setWeapon(self, Weapon):
+        self.currentWeapon = weapon
 
     def shoot(self):
-        self.currentWeapon.shoot()
+        return self.currentWeapon.shoot()
+        
 
 
 
