@@ -4,14 +4,15 @@ import pygame
 from pygame.locals import *
 from player import Player
 from dinosaur import Dinosaur
-from mouse import *
+from weapon import Weapon
 
 SCREEN_SIZE = 600,600
 WHITE = 255,255,255
 
 pygame.init()
 global screen
-screen = pygame.display.set_mode(SCREEN_SIZE, pygame.HWSURFACE | pygame.DOUBLEBUF)
+player = Player()
+screen = pygame.display.set_mode(SCREEN_SIZE)
 screen.fill((255,255,255))
 
 clock = pygame.time.Clock()
@@ -21,17 +22,14 @@ pygame.key.set_repeat(10,10)
 
 dino = Dinosaur(500,500)
 
-player = Player()
-playerimage = pygame.image.load("ICON2.bmp").convert()
-
-## lists
-bullets = []
-dinos = []
 done = False
+projectileList = []
 while not done:
-    dt = float(clock.tick(FPS)) / 5
-    mx, my = pygame.mouse.get_pos()
+    dt = float(clock.tick(FPS)) / 50
     
+    screen.fill((255,255,255))
+    
+
     for event in pygame.event.get():
         if event.type == QUIT:
             done = True
@@ -44,26 +42,35 @@ while not done:
                 player.setDY(1)
             elif event.key == K_d:
                 player.setDX(1)
-            elif event.key == K_SPACE:
-                player.lunge(mx,my)
-            
+            elif event.key == K_h:
+                projectile = Weapon(int(player.getX()), int(player.getY()),pygame.mouse.get_pos())
+                projectileList.append(projectile)
+                pygame.draw.circle(screen, (0,0,0), (int(projectile.getX()), int(projectile.getY())), 5)
 
-    screen.fill((255,255,255))
-    #pygame.draw.circle(screen, (0,0,0), (int(player.getX()), int(player.getY())), 5)
-    screen.blit(playerimage, (int(player.getX()), int(player.getY())))
+    
+    if not len(projectileList)<1:
+        for projectile in projectileList:
+            pygame.draw.circle(screen, (0,0,0), (int(projectile.getX()), int(projectile.getY())), 5)
+    
+
+    pygame.draw.circle(screen, (0,0,0), (int(player.getX()), int(player.getY())), 5)
     pygame.draw.circle(screen, (0,0,0), (int(dino.getX()), int(dino.getY())), 5)
     pygame.display.flip()
 
     ## game logic
     dino.decide(player.getX(), player.getY())
-    dino.update(dt)
-    player.update(dt)
-    
-    ## collission detection
-    
-    
 
-pygame.quit()
+
+    ## collider
+    player.update(dt)
+    dino.update(dt)
+
+    if not len(projectileList)<1:
+        for projectile in projectileList:
+            projectile.update(dt)
+    #collider.update(dt)
+
+
 
 
 
