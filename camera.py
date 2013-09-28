@@ -70,8 +70,11 @@ class Camera:
         for i in reversed(toRemove):
             objList.pop(i)
 
-    def drawPlayer(self, playerimage):
+    def drawPlayer(self, playerimage, Score):
         self.screen.blit(playerimage, (self.halfscreenx,self.halfscreeny))
+        font = pygame.font.Font(None, 30)
+        self.screen.blit(font.render(str(Score), 1, (0,0,0)), (25,25))
+
 
     def drawObj(self, obj, img):
         if not self.rect.colliderect(obj.getRect()):

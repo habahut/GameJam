@@ -70,7 +70,7 @@ class Invi_Dino(Dinosaur):
         self.myrect = Rect(x,y, 59, 88)
         self.invi_timer = 500
         self.jump_timer = 300
-        self.shield_timer = 500
+        self.shield_timer = 100
 
     def update(self, dt):
         self.myrect.centerx -= self.dx * dt
