@@ -30,8 +30,10 @@ pygame.key.set_repeat(10,10)
 player = Player(100,100, MachineGun())
 playerimage = pygame.image.load("ICON2.bmp").convert()
 playerimage.set_colorkey((255,255,255))
-dinoimage = pygame.image.load("dino_right.bmp").convert()
-dinoimage.set_colorkey((0,0,0))
+dinoimage = pygame.image.load("dinosaur.bmp").convert()
+dinoimage.set_colorkey((255,255,255))
+dinoimageBig = pygame.image.load("dinohead.bmp").convert()
+dinoimageBig.set_colorkey((255,255,255))
 
 ## body part images:
 bodyParts = []
@@ -101,7 +103,7 @@ while not done:
     screen.fill((255,255,255))
     camera.update(player.getX(), player.getY(), dt)
     camera.drawBulletList(projectileList)
-    camera.drawList(dinoList, dinoimage)
+    camera.drawList(dinoList, dinoimage, dinoimageBig)
     camera.drawPlayer(playerimage)
 
 
