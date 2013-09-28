@@ -12,8 +12,6 @@ class Weapon:
         self.dx /= d
         self.dy /= d
 
-        
-
     def update(self, dt):
         self.x -= self.dx * dt
         self.y -= self.dy * dt

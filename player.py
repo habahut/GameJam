@@ -1,6 +1,6 @@
 #!usr/bin/env python
 
-from pygame import rect
+from pygame import Rect
 from math import sqrt
 
 class Player:
@@ -9,11 +9,12 @@ class Player:
         self.dy = 0
         self.lungetimer = 0
         self.lungedelay = 500
-        self.rect = (x,y,32,32)
-
+        self.myrect = Rect(x,y,32,32)
+    
     def update(self, dt):
-        self.rect.centerx += (self.dx * dt)
-        self.rect.centery += (self.dy * dt)
+        #self.myrect.centerx += (self.dx * dt)
+        self.myrect.centerx += (self.dx * dt)
+        self.myrect.centery += (self.dy * dt)
         self.lungetimer -= dt
         if self.lungetimer >= 400:
             self.dy *= .8
@@ -26,13 +27,12 @@ class Player:
             self.dx *= .5
 
     def lunge(self, mx, my):
-        print self.lungetimer
         if self.lungetimer > 0:
             return
 
         self.lungetimer = self.lungedelay
-        dirX = mx - self.x
-        dirY = my - self.y
+        dirX = mx - self.myrect.centerx
+        dirY = my - self.myrect.centery
 
         d = sqrt(dirX * dirX + dirY * dirY)
         dirX /= d
@@ -50,13 +50,15 @@ class Player:
 
 
     def getX(self):
-        return self.rect.centerx
+        return self.myrect.centerx
     def getY(self):
-        return self.rect.centery
+        return self.myrect.centery
     def setX(self, x):
-        self.rect.centerx = x
+        self.myrect.centerx = x
     def setY(self, y):
-        self.rect.centery = y
+        self.myrect.centery = y
+    def getRect(self):
+        return self.myrect
 
     def setDX(self, dx):
         self.dx = dx
