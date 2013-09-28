@@ -63,7 +63,7 @@ while not done:
 
     ## collider
     player.update(dt)
-    dino.update(dt)
+
 
     if not len(projectileList)<1:
         for projectile in projectileList:
