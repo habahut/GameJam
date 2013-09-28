@@ -19,9 +19,11 @@ FPS = 60
 
 pygame.key.set_repeat(10,10)
 
-dino = Dinosaur(500,500)
+dino = Dinosaur(1000,700)
+dinoleft = pygame.image.load("dino_left.bmp")
+dinoright = pygame.image.load("dino_right.bmp")
 
-player = Player()
+player = Player(100,100)
 playerimage = pygame.image.load("ICON2.bmp").convert()
 
 ## lists
@@ -51,7 +53,8 @@ while not done:
     screen.fill((255,255,255))
     #pygame.draw.circle(screen, (0,0,0), (int(player.getX()), int(player.getY())), 5)
     screen.blit(playerimage, (int(player.getX()), int(player.getY())))
-    pygame.draw.circle(screen, (0,0,0), (int(dino.getX()), int(dino.getY())), 5)
+    #pygame.draw.circle(screen, (0,0,0), (int(dino.getX()), int(dino.getY())), 5)
+    screen.blit(dinoleft, (int(dino.getX()), int(dino.getY())))
     pygame.display.flip()
 
     ## game logic
@@ -60,6 +63,7 @@ while not done:
     player.update(dt)
     
     ## collission detection
+    
     
     
 
