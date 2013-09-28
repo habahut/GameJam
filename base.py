@@ -3,7 +3,7 @@
 import pygame
 from pygame.locals import *
 from player import Player
-from dinosaur import Dinosaur
+from dinosaur import *
 from camera import Camera
 import random
 from weapons import *
@@ -128,8 +128,7 @@ while not done:
         for i in range(len(dinoList)):
             if dinoList[i].getRect().colliderect(projectileList[p].getRect()) == True:
                 #dino.getHit(projectileList[p].getDamage())
-                del dinoList[i]
-                impacts.append([projectileList[p],p])
+                impacts.append([projectileList[p],p,dinoList[i]])
                 break
 
     for impact in impacts:
@@ -147,14 +146,30 @@ while not done:
         if hitType == 2: ## piercing
             pass
 
+    # for impact in impacts:
+    #     p = impact[1]
+    #     del projectileList[p]
+
     for impact in impacts:
         p = impact[1]
-        del projectileList[p]
+        d = impact[2]
+        if d.getShieldTimer() > 300:
+            projectileList[p].setDxDy( (0 - projectileList[p].getDX()), (0 - projectileList[p].getDY()))
+            impacts.remove(impact)
+        else:
+            if impact[0] in projectileList:
+                projectileList.remove(impact[0])
+            if d in dinoList:
+                dinoList.remove(d)
+
 
     for i in range(len(dinoList), 1):#5
         newx = random.randint(-SCREEN_SIZE[0] / 2, SCREEN_SIZE[0] / 2)
         newy = random.randint(-SCREEN_SIZE[1] / 2, SCREEN_SIZE[1] / 2)
-        dinoList.append(Dinosaur(newx, newy))    
+        #dinoList.append(Dinosaur(newx, newy))    
+        #dinoList.append(Invi_Dino(newx, newy))    
+        #dinoList.append(Jump_Dino(newx, newy))    
+        dinoList.append(Shield_Dino(newx, newy))    
 
 pygame.quit()
 

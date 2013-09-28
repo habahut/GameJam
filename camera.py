@@ -60,7 +60,9 @@ class Camera:
             relposx = objList[i].getX() - self.rect.left
             relposy = objList[i].getY() - self.rect.top
 
-            self.screen.blit(img, (int(relposx),int(relposy)))
+            timer = objList[i].getInviTimer()
+            if (timer>150):
+                self.screen.blit(img, (int(relposx),int(relposy)))
 
         for i in reversed(toRemove):
             objList.pop(i)

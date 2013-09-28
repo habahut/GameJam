@@ -69,6 +69,9 @@ class Projectile:
     def setpos(self, x, y):
         self.rect.centerx = x
         self.rect.centery = y
+    def setDxDy(self, dx, dy):
+        self.dx = dx
+        self.dy = dy
     def getImpact(self):
         return self.impact
     def getDamage(self):
