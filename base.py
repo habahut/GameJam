@@ -6,6 +6,7 @@ from player import Player
 from dinosaur import Dinosaur
 from weapon import Weapon
 import weapon
+import time
 
 SCREEN_SIZE = 1000,700
 WHITE = 255,255,255
@@ -33,8 +34,9 @@ playerimage = pygame.image.load("ICON2.bmp").convert()
 bullets = []
 dinoList = []
 projectileList = []
-weaponType = 2
+weaponType = 3
 factory = weapon.WeaponFactory()
+timeLock = 0
 
 dinoList.append(dino)
 done = False
@@ -59,8 +61,11 @@ while not done:
             elif event.key == K_SPACE:
                 player.lunge(mx,my)
             elif event.key == K_h:
-                projectile = factory.createProjectile(int(player.getX()), int(player.getY()),pygame.mouse.get_pos(), weaponType)
-                projectileList.append(projectile)
+                current = int(round(time.time() * 1000))
+                if (current - timeLock > 1000 * factory.getProjectileRate(type)):
+                    projectile = factory.createProjectile(int(player.getX()), int(player.getY()),pygame.mouse.get_pos(), weaponType)
+                    projectileList.append(projectile)
+                    timeLock = current
   
     screen.fill((255,255,255))  
     if not len(projectileList)<1:

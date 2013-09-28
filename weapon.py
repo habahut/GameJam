@@ -11,6 +11,22 @@ class WeaponFactory:
         elif (type==4):
             return ShotGun(PlayerX, PlayerY, mouse)
 
+    def getProjectileRate(self, type):
+        if (type==1):
+            weapon = Bow(0,0,(0,0))
+            return weapon.getRate()
+        elif (type==2):
+            weapon = MachineGun(0,0,(0,0))
+            return weapon.getRate()
+        elif (type==3):
+            weapon = Rocket(0,0,(0,0))
+            return weapon.getRate()
+        elif (type==4):
+            weapon = ShotGun(0,0,(0,0))
+            return weapon.getRate()
+
+
+
 class Weapon:
 
     def __init__(self, PlayerX, PlayerY, mouse, type):
@@ -35,11 +51,14 @@ class Weapon:
         return self.x
     def getY(self):
         return self.y
+    def getRate(self):
+        return self.rate
 
     def setDX(self, dx):
         self.dx = dx
     def setDY(self, dy):
         self.dy = dy
+
 
 class Bow(Weapon):
 
