@@ -31,7 +31,7 @@ player = Player(100,100, MachineGun())
 playerimage = pygame.image.load("ICON2.bmp").convert()
 playerimage.set_colorkey((255,255,255))
 dinoimage = pygame.image.load("dino_right.bmp").convert()
-dinoimage.set_colorkey((0,0,0))
+dinoimage.set_colorkey((48,120,128))
 
 ## body part images:
 bodyParts = []
@@ -52,6 +52,24 @@ bodyParts[6].set_colorkey((0,0,0))
 bodyParts.append(pygame.image.load("limb7.bmp").convert())
 bodyParts[7].set_colorkey((0,0,0))
 
+## sounds
+pygame.mixer.init()
+sounds = {}
+sounds['cutthemdown'] = pygame.mixer.Sound("cutthemdown.ogg")
+sounds['datlaugh'] = pygame.mixer.Sound("datlaugh.ogg")
+sounds['leavetheminpieces'] = pygame.mixer.Sound("leavetheminpeices.ogg")
+sounds['carnage'] = pygame.mixer.Sound("carnage.ogg")
+sounds['swings'] = pygame.mixer.Sound("swings.ogg")
+
+## weapon images
+weaponImages = {}
+weaponImages['rocketlauncher'] = pygame.image.load("bazooka.png").convert()
+weaponImages['rocketlauncher'].set_colorkey((0,0,0))
+weaponImages['bow'] = pygame.image.load("bow.png").convert()
+weaponImages['bow'].set_colorkey((0,0,0))
+weaponImages['sword'] = pygame.image.load("sword.png").convert()
+weaponImages['sword'].set_colorkey((0,0,0))
+
 ## lists
 bullets = []
 projectileList = []
@@ -64,8 +82,7 @@ timeLock = 0
 done = False
 shooting = False
 
-camera = Camera(screen, SCREEN_SIZE, (playerstartx,playerstarty), TiledImage(pygame.image.load("grasstile.bmp").convert()), 100)
-g = GoreSplatter(250,250, 2,3,5,1, bodyParts[random.randint(0, len(bodyParts) - 1)])
+camera = Camera(screen, SCREEN_SIZE, (playerstartx,playerstarty), TiledImage(pygame.image.load("grasstile.bmp").convert()), 100, weaponImages['rocketlauncher'])
 while not done:
     mx,my = pygame.mouse.get_pos()
     dt = float(clock.tick(FPS)) / 5
@@ -86,6 +103,16 @@ while not done:
                 player.setDX(1)
             elif event.key == K_SPACE:
                 player.lunge(mx,my)
+            elif event.key == K_1:
+                player.setWeapon(Bow())
+                #camera.setCurrentWeapon
+            elif event.key == K_2:
+                player.setWeapon(MachineGun())
+            elif event.key == K_3:
+                player.setWeapon(FUCKINGSWORD())
+            elif event.key == K_4:
+                player.setWeapon(RocketLauncher())
+                camera.setCurrentWeapon(weaponImages['rocketlauncher'])
         elif event.type == MOUSEBUTTONDOWN:
             shooting = True
         elif event.type == MOUSEBUTTONUP:
@@ -102,12 +129,7 @@ while not done:
     camera.update(player.getX(), player.getY(), dt)
     camera.drawBulletList(projectileList)
     camera.drawList(dinoList, dinoimage)
-    camera.drawPlayer(playerimage)
-
-
-    screen.blit(g.getScreen(), g.getRect())
-
-    
+    camera.drawPlayer(playerimage)   
     pygame.display.flip()
 
     ## game logic

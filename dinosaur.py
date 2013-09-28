@@ -8,7 +8,7 @@ class Dinosaur:
     def __init__(self, x, y):
         self.dx = 0
         self.dy = 0
-        self.myrect = Rect(x,y, 30, 44)
+        self.myrect = Rect(x,y, 59, 88)
 
     def decide(self, playerX, playerY):
         self.dx = self.myrect.centerx - playerX

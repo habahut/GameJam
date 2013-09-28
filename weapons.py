@@ -7,6 +7,7 @@ from pygame import Rect
 0 = normal
 1 = explodes
 2 = piercing
+3 = bludgeoning
 """
 
 
@@ -20,7 +21,7 @@ class Weapon:
 
     def shoot(self): pass
 
-class Bow(Weapon):
+class Bow(Weapon):    
     def __init__(self):
         self.rate = 400
         self.timer = 0
@@ -82,7 +83,7 @@ class FUCKINGSWORD(Weapon):
         self.rate = 110
         self.timer = 0
         self.damage = 10000
-        self.hitType = 1
+        self.hitType = 3
         self.speed = .01
         self.impact = 40
 

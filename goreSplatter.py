@@ -30,8 +30,8 @@ class GoreSplatter:
         self.screen = pygame.Surface((maxX, maxY))
         self.screen.set_colorkey((255,255,255))
         self.screen.fill((255,255,255))
-        # slash mark first
-        if True:#impact > 5:
+        
+        if hitType == 2:#impact > 5:
             # BONUS
             ndx = random.randint(2,6)
             ndy = random.randint(2,6)

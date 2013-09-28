@@ -7,7 +7,7 @@ import random
 
 class Camera:
 
-    def __init__(self, screen, screensize, playerpos, tileImage, tileSize):
+    def __init__(self, screen, screensize, playerpos, tileImage, tileSize, currentWeapon):
         self.screen = screen
         self.screensize = screensize
         self.playerx,self.playery = playerpos
@@ -19,8 +19,11 @@ class Camera:
         self.tileSize = tileSize
         self.dpx = 0
         self.dpy = 0
-
+        self.currentWeapon = currentWeapon
         self.goreObjects = []
+
+    def changeWeapon(self, cw):
+        self.currentWeapon = cw
 
     def registerGore(self, go):
         self.goreObjects.append(go)
@@ -49,7 +52,10 @@ class Camera:
                 toRemove.append(i)
 
         for i in toRemove:
-            del self.goreObjects[i]                
+            del self.goreObjects[i]
+
+        self.screen.blit(self.currentWeapon, (15,15))
+        
 
     def drawList(self, objList, img):
         toRemove = []

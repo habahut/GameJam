@@ -34,8 +34,8 @@ class Player:
             return
 
         self.lungetimer = self.lungedelay
-        dirX = mx - self.myrect.centerx
-        dirY = my - self.myrect.centery
+        dirX = mx - 500
+        dirY = my - 350
 
         d = sqrt(dirX * dirX + dirY * dirY)
         dirX /= d
