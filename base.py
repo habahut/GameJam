@@ -5,6 +5,8 @@ from pygame.locals import *
 from player import Player
 from dinosaur import Dinosaur
 from weapon import Weapon
+from camera import Camera
+import random
 
 SCREEN_SIZE = 1000,700
 WHITE = 255,255,255
@@ -14,27 +16,28 @@ global screen
 screen = pygame.display.set_mode(SCREEN_SIZE)
 screen.fill((255,255,255))
 
+playerstartx,playerstarty = 100,100
+
 clock = pygame.time.Clock()
 FPS = 60
 
 pygame.key.set_repeat(10,10)
 
-dino = Dinosaur(700,1000)
-dinoleft = pygame.image.load("dino_right.bmp")
-dinoright = pygame.image.load("dino_right.bmp")
-
-
-
 player = Player(100,100)
 playerimage = pygame.image.load("ICON2.bmp").convert()
+dinoimage = pygame.image.load("dino_right.bmp").convert()
+dinoimage.set_colorkey((0,0,0))
+
 
 ## lists
 bullets = []
-dinoList = []
 projectileList = []
+dinoList = []
+dinoList.append(Dinosaur(700,700))
 
-dinoList.append(dino)
 done = False
+
+camera = Camera(screen, SCREEN_SIZE, (playerstartx,playerstarty))
 while not done:
     mx,my = pygame.mouse.get_pos()
     dt = float(clock.tick(FPS)) / 5
@@ -55,38 +58,42 @@ while not done:
                 player.setDX(1)
             elif event.key == K_SPACE:
                 player.lunge(mx,my)
-            elif event.key == K_h:
-                projectile = Weapon(int(player.getX()), int(player.getY()),pygame.mouse.get_pos())
-                projectileList.append(projectile)
+        elif event.type == MOUSEBUTTONDOWN:
+            projectile = Weapon(int(player.getX()), int(player.getY()),(mx,my))
+            print mx,my
+            projectileList.append(projectile)
   
-    screen.fill((255,255,255))  
-    if not len(projectileList)<1:
-        for projectile in projectileList:
-            pygame.draw.circle(screen, (0,0,0), (int(projectile.getX()), int(projectile.getY())), 5)
-    screen.blit(playerimage, (int(player.getX()), int(player.getY())))
-    screen.blit(dinoleft, (int(dino.getX()), int(dino.getY())))
+    screen.fill((255,255,255))
+    camera.update(player.getX(), player.getY())
+    camera.drawBulletList(projectileList)
+    camera.drawList(dinoList, dinoimage)
+    camera.drawPlayer(playerimage)
     pygame.display.flip()
 
     ## game logic
-    dino.decide(player.getX(), player.getY())
-
-
-    ## collider
     player.update(dt)
-    dino.update(dt)
+    for d in dinoList:
+        d.decide(player.getX(), player.getY())
+        d.update(dt)
     
     ## collission detection
     toRemove = []
     for projectile in projectileList:
         projectile.update(dt)
-        for i in range(len(dinoList), 0, -1):
-            if dino.getrect().colliderect(pygame.Rect(int(projectile.getX()), int(projectile.getY()), 2,2)) == True:
-                dino.getHit(projectile)
+        for i in range(len(dinoList)):
+            if dinoList[i].getRect().colliderect(pygame.Rect(int(projectile.getX()), int(projectile.getY()), 2,2)) == True:
+                #dino.getHit(projectile)
                 toRemove.append(i)
 
     for i in toRemove:
-        dinolist.
-                
+        dinoList.pop(i)
+
+    for i in range(len(dinoList), 5):
+        newx = random.randint(-SCREEN_SIZE[0] / 2, SCREEN_SIZE[0] / 2)
+        newy = random.randint(-SCREEN_SIZE[1] / 2, SCREEN_SIZE[1] / 2)
+        dinoList.append(Dinosaur(newx, newy))
+        
+        
                 
     
 

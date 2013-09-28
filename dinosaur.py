@@ -17,9 +17,9 @@ class Dinosaur:
         d = sqrt(self.dx * self.dx + self.dy * self.dy) 
         if d == 0:
             return
-        self.dx /= d
-        self.dy /= d
-
+        self.dx /= d * 2
+        self.dy /= d * 2
+        
     def update(self, dt):
         self.myrect.centerx -= self.dx * dt
         self.myrect.centery -= self.dy * dt
@@ -28,7 +28,7 @@ class Dinosaur:
         return self.myrect.centerx
     def getY(self):
         return self.myrect.centery
-    def getrect(self):
+    def getRect(self):
         return self.myrect
 
     def setDX(self, dx):
