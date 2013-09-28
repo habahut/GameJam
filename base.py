@@ -5,6 +5,7 @@ from pygame.locals import *
 from player import Player
 from dinosaur import Dinosaur
 from weapon import Weapon
+import weapon
 
 SCREEN_SIZE = 1000,700
 WHITE = 255,255,255
@@ -32,6 +33,8 @@ playerimage = pygame.image.load("ICON2.bmp").convert()
 bullets = []
 dinoList = []
 projectileList = []
+weaponType = 2
+factory = weapon.WeaponFactory()
 
 dinoList.append(dino)
 done = False
@@ -56,7 +59,7 @@ while not done:
             elif event.key == K_SPACE:
                 player.lunge(mx,my)
             elif event.key == K_h:
-                projectile = Weapon(int(player.getX()), int(player.getY()),pygame.mouse.get_pos())
+                projectile = factory.createProjectile(int(player.getX()), int(player.getY()),pygame.mouse.get_pos(), weaponType)
                 projectileList.append(projectile)
   
     screen.fill((255,255,255))  
@@ -79,13 +82,13 @@ while not done:
     toRemove = []
     for projectile in projectileList:
         projectile.update(dt)
-        for i in range(len(dinoList), 0, -1):
-            if dino.getrect().colliderect(pygame.Rect(int(projectile.getX()), int(projectile.getY()), 2,2)) == True:
-                dino.getHit(projectile)
-                toRemove.append(i)
+        # for i in range(len(dinoList), 0, -1):
+            # if dino.getrect().colliderect(pygame.Rect(int(projectile.getX()), int(projectile.getY()), 2,2)) == True:
+                # dino.getHit(projectile)
+                # toRemove.append(i)
 
-    for i in toRemove:
-        dinolist.
+    # for i in toRemove:
+    #     dinolist.
                 
                 
     

@@ -35,3 +35,4 @@ class Dinosaur:
         self.dx = dx
     def setDY(self, dy):
         self.dy = dy
+

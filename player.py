@@ -10,6 +10,7 @@ class Player:
         self.lungetimer = 0
         self.lungedelay = 500
         self.myrect = Rect(x,y,32,32)
+        self.weapon = 1
     
     def update(self, dt):
         #self.myrect.centerx += (self.dx * dt)
