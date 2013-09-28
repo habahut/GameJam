@@ -4,6 +4,7 @@ from pygame import Rect
 import pygame
 from tiledImage import TiledImage
 import random
+import math
 
 class Camera:
 
@@ -57,7 +58,7 @@ class Camera:
         self.screen.blit(self.currentWeapon, (15,15))
         
 
-    def drawList(self, objList, img):
+    def drawList(self, objList, img1, img2):
         toRemove = []
         for i in range(len(objList)):
             if not self.rect.colliderect(objList[i].getRect()):
@@ -68,13 +69,18 @@ class Camera:
 
             timer = objList[i].getInviTimer()
             if (timer>150):
-                self.screen.blit(img, (int(relposx),int(relposy)))
-
+                if math.sqrt(math.pow((int(relposx)-self.halfscreenx),2) + math.pow((int(relposy)-self.halfscreeny),2))>100:
+                    self.screen.blit(img1, (int(relposx),int(relposy)))
+                else:
+                    self.screen.blit(img2, (int(relposx),int(relposy)))
         for i in reversed(toRemove):
             objList.pop(i)
 
-    def drawPlayer(self, playerimage):
+    def drawPlayer(self, playerimage, Score):
         self.screen.blit(playerimage, (self.halfscreenx,self.halfscreeny))
+        font = pygame.font.Font(None, 30)
+        self.screen.blit(font.render(str(Score), 1, (0,0,0)), (25,25))
+
 
     def drawObj(self, obj, img):
         if not self.rect.colliderect(obj.getRect()):

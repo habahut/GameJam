@@ -31,8 +31,11 @@ currentWeapon = MachineGun()
 player = Player(100,100, currentWeapon)
 playerimage = pygame.image.load("ICON2.bmp").convert()
 playerimage.set_colorkey((255,255,255))
-dinoimage = pygame.image.load("dino_right.bmp").convert()
-dinoimage.set_colorkey((48,120,128))
+dinoimage = pygame.image.load("dinosaur.bmp").convert()
+dinoimage.set_colorkey((255,255,255))
+dinoimageBig = pygame.image.load("dinohead.bmp").convert()
+dinoimageBig.set_colorkey((255,255,255))
+
 
 ## body part images:
 bodyParts = []
@@ -91,6 +94,7 @@ timeLock = 0
 
 done = False
 shooting = False
+Score = 0
 
 camera = Camera(screen, SCREEN_SIZE, (playerstartx,playerstarty), TiledImage(pygame.image.load("grasstile.bmp").convert()), 100, weaponImages['minigun'])
 while not done:
@@ -152,8 +156,8 @@ while not done:
     screen.fill((255,255,255))
     camera.update(player.getX(), player.getY(), dt)
     camera.drawBulletList(projectileList)
-    camera.drawList(dinoList, dinoimage)
-    camera.drawPlayer(playerimage)   
+    camera.drawList(dinoList, dinoimage, dinoimageBig)
+    camera.drawPlayer(playerimage, Score)
     pygame.display.flip()
 
     ## game logic
@@ -216,15 +220,21 @@ while not done:
                 projectileList.remove(impact[0])
             if d in dinoList:
                 dinoList.remove(d)
+                Score += 1
 
 
-    for i in range(len(dinoList), 1):#5
+    for i in range(len(dinoList), 5):
         newx = random.randint(-SCREEN_SIZE[0] / 2, SCREEN_SIZE[0] / 2)
         newy = random.randint(-SCREEN_SIZE[1] / 2, SCREEN_SIZE[1] / 2)
-        #dinoList.append(Dinosaur(newx, newy))    
-        #dinoList.append(Invi_Dino(newx, newy))    
-        #dinoList.append(Jump_Dino(newx, newy))    
-        dinoList.append(Shield_Dino(newx, newy))    
+        dino_type = random.randint(1,4)
+        if dino_type==1:
+            dinoList.append(Dinosaur(newx, newy))    
+        elif dino_type==2:
+            dinoList.append(Invi_Dino(newx, newy))    
+        elif dino_type==3:
+            dinoList.append(Jump_Dino(newx, newy))    
+        elif dino_type==4:
+            dinoList.append(Shield_Dino(newx, newy))    
 
 pygame.quit()
 
