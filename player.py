@@ -16,6 +16,9 @@ class Player:
         self.myrect.centerx += (self.dx * dt)
         self.myrect.centery += (self.dy * dt)
         self.lungetimer -= dt
+        
+        self.currentWeapon.update(dt)
+
         if self.lungetimer >= 400:
             self.dy *= .8
             self.dx *= .8
@@ -46,6 +49,8 @@ class Player:
     def getWeapon(self):
         return 1
 
+    def shoot(self):
+        self.currentWeapon.shoot()
 
 
 
