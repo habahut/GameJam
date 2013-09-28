@@ -25,7 +25,7 @@ player = Player()
 playerimage = pygame.image.load("ICON2.bmp").convert()
 
 ## lists
-projectiles = []
+bullets = []
 dinos = []
 done = False
 while not done:

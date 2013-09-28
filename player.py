@@ -36,9 +36,9 @@ class Player:
 
         d = sqrt(dirX * dirX + dirY * dirY)
         dirX /= d
-        dirX *= 8
+        dirX *= 7
         dirY /= d
-        dirY *= 8
+        dirY *= 7
 
         self.dx += dirX
         self.dy += dirY
