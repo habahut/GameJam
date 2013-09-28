@@ -1,19 +1,19 @@
 #!usr/bin/env python
 
+from pygame import rect
 from math import sqrt
 
 class Player:
-    def __init__(self):
-        self.x = 100
-        self.y = 100
+    def __init__(self, x, y):
         self.dx = 0
         self.dy = 0
         self.lungetimer = 0
         self.lungedelay = 500
+        self.rect = (x,y,32,32)
 
     def update(self, dt):
-        self.x += (self.dx * dt)
-        self.y += (self.dy * dt)
+        self.rect.centerx += (self.dx * dt)
+        self.rect.centery += (self.dy * dt)
         self.lungetimer -= dt
         if self.lungetimer >= 400:
             self.dy *= .8
@@ -50,13 +50,13 @@ class Player:
 
 
     def getX(self):
-        return self.x
+        return self.rect.centerx
     def getY(self):
-        return self.y
+        return self.rect.centery
     def setX(self, x):
-        self.x = x
+        self.rect.centerx = x
     def setY(self, y):
-        self.y = y
+        self.rect.centery = y
 
     def setDX(self, dx):
         self.dx = dx
